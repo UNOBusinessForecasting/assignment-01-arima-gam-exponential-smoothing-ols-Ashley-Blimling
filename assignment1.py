@@ -14,11 +14,11 @@ import plotly.express as px
 
 data = pd.read_csv("https://github.com/dustywhite7/econ8310-assignment1/raw/main/assignment_data_train.csv")
 
-TT = data[["Timestamp", "trips"]]
+TT = data.loc[data.month == 1,["Timestamp", "trips"]]
 
-TT.Timestamp = pd.to_datetime(TT.Timestamp, infer_datetime_format=True)
+TT.Timestamp = pd.to_datetime(TT.Timestamp, infer_datetime_format = True)
 
-TT = pd.DataFrame(TT.values, columns = ['ds', 'y'])
+TT = pd.DataFrame(TT.values, columns = ["ds", "y"])
 
 model = Prophet(changepoint_prior_scale=0.5, daily_seasonality=True)
 
