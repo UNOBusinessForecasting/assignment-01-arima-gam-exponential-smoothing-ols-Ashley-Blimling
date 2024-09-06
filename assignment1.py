@@ -26,6 +26,6 @@ modelFit = model.fit(TT)
 
 future = model.make_future_dataframe(periods=365)
 
-forecast = model.predict(future)
+pred = model.predict(future)
 
-pred = model.plot_components(forecast)
+plotpred = model.plot_components(pred)
