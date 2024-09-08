@@ -10,7 +10,6 @@ Original file is located at
 import pandas as pd
 import numpy as np
 from prophet import Prophet
-import plotly.express as px
 
 data = pd.read_csv("https://github.com/dustywhite7/econ8310-assignment1/raw/main/assignment_data_train.csv")
 
@@ -24,8 +23,8 @@ model = Prophet(changepoint_prior_scale=0.5, daily_seasonality=True)
 
 modelFit = model.fit(TT)
 
-future = model.make_future_dataframe(periods=365)
+future = model.make_future_dataframe(periods=744, freq="H")
 
-pred = model.predict(future)
+forecast = modelFit.predict(future)
 
-plotpred = model.plot_components(pred)
+pred = forecast[["ds", "yhat"]].tail(744)
