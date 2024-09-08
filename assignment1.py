@@ -15,7 +15,9 @@ data = pd.read_csv("https://github.com/dustywhite7/econ8310-assignment1/raw/main
 
 TT = data.loc[data.month == 1,["Timestamp", "trips"]]
 
-TT["Timestamp"] = pd.to_datetime(TT["Timestamp"], infer_datetime_format = True)
+TT["Timestamp"] = pd.to_datetime(TT["Timestamp"])
+
+TT["trips"] = pd.to_numeric(TT["trips"], errors = "coerce")
 
 TT = pd.DataFrame(TT.values, columns = ["ds", "y"])
 
@@ -23,8 +25,12 @@ model = Prophet(changepoint_prior_scale = 0.5, daily_seasonality = True)
 
 modelFit = model.fit(TT)
 
-future = model.make_future_dataframe(periods = 744, freq = "H")
+future = model.make_future_dataframe(periods = 744, freq = "h")
 
 forecast = modelFit.predict(future)
 
-pred = forecast[["ds", "yhat"]].tail(744)
+pred = forecast[["ds", "yhat"]].tail(744).values
+
+pred_values = pred[:, 1]
+
+pred_values = np.array(pred_values, dtype = float)
