@@ -13,11 +13,11 @@ from prophet import Prophet
 
 data = pd.read_csv("https://github.com/dustywhite7/econ8310-assignment1/raw/main/assignment_data_train.csv")
 
-TT = data.loc[data.month == 1, ["Timestamp", "trips"]]
+data["Timestamp"] = pd.to_datetime(data["Timestamp"])
 
-TT["Timestamp"] = pd.to_datetime(TT["Timestamp"])
+data["trips"] = pd.to_numeric(data["trips"], errors = "coerce")
 
-TT["trips"] = pd.to_numeric(TT["trips"], errors = "coerce")
+TT = data.loc[(data["Timestamp"].dt.year == data["year"].max()) & (data["Timestamp"].dt.month == 1), ["Timestamp", "trips"]]
 
 TT = TT.rename(columns={"Timestamp": "ds", "trips": "y"})
 
@@ -29,7 +29,7 @@ future = model.make_future_dataframe(periods = 744, freq = "H")
 
 forecast = modelFit.predict(future)
 
-pred = forecast[["ds", "yhat"]].tail(744).values
+pred = forecast[["ds", "yhat"]].tail(744)
 
 predDF = pd.DataFrame(pred)
 
