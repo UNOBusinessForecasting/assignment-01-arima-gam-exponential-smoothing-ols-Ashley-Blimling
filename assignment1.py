@@ -15,11 +15,11 @@ data = pd.read_csv("https://github.com/dustywhite7/econ8310-assignment1/raw/main
 
 data["Timestamp"] = pd.to_datetime(data["Timestamp"])
 
-data["trips"] = pd.to_numeric(data["trips"], errors = "coerce")
+data["trips"] = pd.to_numeric(data["trips"])
 
 TT = data.loc[(data["Timestamp"].dt.month == 1), ["Timestamp", "trips"]]
 
-TT = TT.rename(columns={"Timestamp": "ds", "trips": "y"})
+TT = pd.DataFrame(TT.values, columns = ["ds", "y"])
 
 model = Prophet(changepoint_prior_scale = 0.5)
 
