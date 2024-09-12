@@ -31,4 +31,6 @@ forecast = modelFit.predict(future)
 
 pred = pd.DataFrame(forecast[["ds", "yhat"]].tail(744))
 
+pred.set_index("ds", inplace = True)
+
 print(pred)
