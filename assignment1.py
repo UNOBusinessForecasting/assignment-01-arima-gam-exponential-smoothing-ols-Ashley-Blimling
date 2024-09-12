@@ -21,13 +21,11 @@ TT = data.loc[(data["Timestamp"].dt.month == 1), ["Timestamp", "trips"]]
 
 TT = pd.DataFrame(TT.values, columns = ["ds", "y"])
 
-model = Prophet(changepoint_prior_scale = 0.5)
+model = Prophet(changepoint_prior_scale = 0.5, )
 
 modelFit = model.fit(TT)
 
-future = model.make_future_dataframe(periods = 744, freq = "H")
-
-forecast = modelFit.predict(future)
+future = model.make_future_dataframe(periods = 744)
 
 pred = pd.DataFrame(forecast[["ds", "yhat"]].head(744))
 
