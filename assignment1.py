@@ -29,8 +29,6 @@ future = model.make_future_dataframe(periods = 744, freq = "H")
 
 forecast = modelFit.predict(future)
 
-pred = forecast[["ds", "yhat"]].tail(744)
+pred = pd.DataFrame(forecast[["ds", "yhat"]].tail(744))
 
-predDF = pd.DataFrame(pred)
-
-print(predDF)
+print(pred)
