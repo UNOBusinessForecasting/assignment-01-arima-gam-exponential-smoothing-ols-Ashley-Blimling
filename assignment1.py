@@ -17,7 +17,7 @@ data["Timestamp"] = pd.to_datetime(data["Timestamp"])
 
 data["trips"] = pd.to_numeric(data["trips"], errors = "coerce")
 
-TT = data.loc[(data["Timestamp"].dt.year == data["year"].max()) & (data["Timestamp"].dt.month == 1), ["Timestamp", "trips"]]
+TT = data.loc[(data["Timestamp"].dt.month == 1), ["Timestamp", "trips"]]
 
 TT = TT.rename(columns={"Timestamp": "ds", "trips": "y"})
 
@@ -29,7 +29,7 @@ future = model.make_future_dataframe(periods = 744, freq = "H")
 
 forecast = modelFit.predict(future)
 
-pred = pd.DataFrame(forecast[["ds", "yhat"]].tail(744))
+pred = pd.DataFrame(forecast[["ds", "yhat"]].head(744))
 
 pred.set_index("ds", inplace = True)
 
