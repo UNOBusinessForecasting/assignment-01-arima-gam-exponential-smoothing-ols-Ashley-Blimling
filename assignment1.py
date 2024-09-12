@@ -27,6 +27,8 @@ modelFit = model.fit(TT)
 
 future = model.make_future_dataframe(periods = 744)
 
+forecast = modelFit.predict(future)
+
 pred = pd.DataFrame(forecast[["ds", "yhat"]].head(744))
 
 pred.set_index("ds", inplace = True)
