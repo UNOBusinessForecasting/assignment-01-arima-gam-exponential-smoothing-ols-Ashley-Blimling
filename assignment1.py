@@ -21,7 +21,7 @@ TT = data.loc[(data["Timestamp"].dt.month == 1), ["Timestamp", "trips"]]
 
 TT = TT.rename(columns={"Timestamp": "ds", "trips": "y"})
 
-model = Prophet(changepoint_prior_scale = 0.5, daily_seasonality = True)
+model = Prophet(changepoint_prior_scale = 0.5)
 
 modelFit = model.fit(TT)
 
