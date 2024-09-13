@@ -17,7 +17,7 @@ data["Timestamp"] = pd.to_datetime(data["Timestamp"])
 
 data["trips"] = pd.to_numeric(data["trips"])
 
-TT = data.loc[(data["Timestamp"].dt.month == 1), ["Timestamp", "trips"]]
+TT = data[["Timestamp", "trips"]]
 
 TT = pd.DataFrame(TT.values, columns = ["ds", "y"])
 
